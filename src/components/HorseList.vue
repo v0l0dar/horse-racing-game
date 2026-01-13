@@ -7,16 +7,17 @@ const horses = computed(() => store.state.horses)
 </script>
 
 <template>
-  <div v-if="horses.length === 0" class="p-8 text-center text-gray-400 text-sm">
+  <div v-if="horses.length === 0" class="p-8 text-center text-gray-400 text-sm" data-test="horse-list-empty">
     No horses loaded.
     <br />
     Click "Generate".
   </div>
 
-  <ul v-else class="divide-y divide-gray-100">
+  <ul v-else class="divide-y divide-gray-100" data-test="horse-list">
     <li
       v-for="horse in horses"
       :key="horse.id"
+      data-test="horse-item"
       class="p-3 flex items-center justify-between hover:bg-gray-50 transition-colors"
     >
       <div class="flex items-center gap-3">

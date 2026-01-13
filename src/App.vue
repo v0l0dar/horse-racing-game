@@ -34,6 +34,7 @@ const handleStart = () => {
         <button
           @click="handleGenerate"
           :disabled="isRunning"
+          data-test="generate-btn"
           class="bg-white text-amber-600 px-6 py-2 rounded-full font-bold shadow hover:bg-amber-50 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Generate Program
@@ -41,6 +42,7 @@ const handleStart = () => {
         <button
           @click="handleStart"
           :disabled="isRunning || !hasSchedule || isFinished"
+          data-test="start-btn"
           class="bg-green-600 text-white px-8 py-2 rounded-full font-bold shadow hover:bg-green-700 active:scale-95 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           {{ isRunning ? 'Racing...' : 'Start Race' }}

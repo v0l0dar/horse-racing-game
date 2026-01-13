@@ -12,12 +12,15 @@ const currentRoundIndex = computed(() => store.state.currentRoundIndex)
 </script>
 
 <template>
-  <div v-if="schedule.length === 0" class="p-8 text-center text-gray-400 text-sm">No schedule generated.</div>
+  <div v-if="schedule.length === 0" data-test="empty-message" class="p-8 text-center text-gray-400 text-sm">
+    No schedule generated.
+  </div>
 
-  <div v-else class="divide-y divide-blue-50">
+  <div v-else data-test="schedule-list" class="divide-y divide-blue-50">
     <div
       v-for="(round, index) in schedule"
       :key="round.roundId"
+      data-test="round-item"
       class="p-3 transition-colors duration-300"
       :class="{
         'bg-blue-50 ring-2 ring-inset ring-blue-200': index === currentRoundIndex,
@@ -25,8 +28,11 @@ const currentRoundIndex = computed(() => store.state.currentRoundIndex)
       }"
     >
       <div class="flex justify-between items-center mb-2">
-        <span class="font-bold text-sm text-gray-800">Round {{ round.roundId }}</span>
-        <span class="text-xs bg-white border border-gray-200 text-gray-600 px-2 py-0.5 rounded-full">
+        <span data-test="round-id" class="font-bold text-sm text-gray-800">Round {{ round.roundId }}</span>
+        <span
+          data-test="round-distance"
+          class="text-xs bg-white border border-gray-200 text-gray-600 px-2 py-0.5 rounded-full"
+        >
           {{ round.distance }}m
         </span>
       </div>

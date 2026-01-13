@@ -18,6 +18,7 @@ const getProgress = (id: number) => {
     <h2 class="font-bold text-gray-700">Race Track</h2>
     <div
       v-if="currentRound"
+      data-test="round-info"
       class="text-sm font-mono bg-red-100 text-red-600 px-3 py-1 rounded-full border border-red-200"
     >
       Round {{ currentRound.roundId }} — {{ currentRound.distance }}m
@@ -25,12 +26,16 @@ const getProgress = (id: number) => {
   </div>
 
   <div class="flex-1 bg-stone-100 relative overflow-hidden flex flex-col justify-center">
-    <div v-if="!currentRound" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+    <div
+      v-if="!currentRound"
+      data-test="empty-message"
+      class="absolute inset-0 flex flex-col items-center justify-center text-gray-400"
+    >
       <div class="text-6xl mb-4 opacity-50">🏟️</div>
       <p>Track is empty</p>
     </div>
 
-    <div v-else class="w-full flex flex-col h-full">
+    <div v-else data-test="track-lanes" class="w-full flex flex-col h-full">
       <div class="absolute right-12 top-0 bottom-0 w-2 border-l-2 border-dashed border-red-300 z-0">
         <div
           class="absolute top-0 left-0 text-xs text-red-600 font-bold tracking-widest uppercase rotate-90 origin-bottom-left"
@@ -42,6 +47,7 @@ const getProgress = (id: number) => {
       <div
         v-for="(horse, index) in currentRound.horses"
         :key="horse.id"
+        data-test="horse-lane"
         class="flex-1 border-b border-gray-300/50 relative flex items-center bg-white/50"
       >
         <div
@@ -59,6 +65,7 @@ const getProgress = (id: number) => {
               left: `calc(${getProgress(horse.id)}% - 2rem)`,
               zIndex: 10,
             }"
+            :data-test="`horse-runner-${horse.id}`"
           >
             <div class="relative">
               <div class="text-3xl transform -scale-x-100 filter drop-shadow-sm">🐎</div>
