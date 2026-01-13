@@ -2,6 +2,9 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import store from './store'
+import store, { key } from './store'
 
-createApp(App).use(store).mount('#app')
+const app = createApp(App)
+
+app.use(store, key)
+app.mount('#app')
