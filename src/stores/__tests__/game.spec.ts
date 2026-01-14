@@ -293,9 +293,7 @@ describe('Game Store', () => {
     })
 
     it('clears currentRacePositions', () => {
-      store.currentRacePositions = [
-        { id: 1, progress: 50, finished: false, time: 0 },
-      ]
+      store.currentRacePositions = [{ id: 1, progress: 50, finished: false, time: 0 }]
       const round = store.schedule[0]
       const mockPositions = round.horses.map(horse => ({
         id: horse.id,

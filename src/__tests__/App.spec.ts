@@ -28,7 +28,7 @@ describe('App.vue', () => {
 
   it('renders header component', () => {
     const wrapper = mount(App)
-    
+
     // TheHeader should render the title
     expect(wrapper.html()).toContain('Horse Racing')
   })

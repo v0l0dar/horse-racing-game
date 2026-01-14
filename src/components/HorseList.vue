@@ -7,7 +7,9 @@ const horses = computed(() => store.horses)
 </script>
 
 <template>
-  <aside class="col-span-2 bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 flex-1 h-full min-h-0 overflow-hidden">
+  <aside
+    class="col-span-2 bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 flex-1 h-full min-h-0 overflow-hidden"
+  >
     <div
       class="bg-gray-50 p-3 border-b border-gray-200 font-bold text-gray-700 text-center uppercase text-xs tracking-wider"
     >
@@ -28,7 +30,10 @@ const horses = computed(() => store.horses)
           class="p-3 flex items-center justify-between hover:bg-gray-50 transition-colors"
         >
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded shadow-sm border border-black/10" :style="{ backgroundColor: horse.color }"></div>
+            <div
+              class="w-4 h-4 rounded shadow-sm border border-black/10"
+              :style="{ backgroundColor: horse.color }"
+            ></div>
             <span class="text-sm font-medium text-gray-700">{{ horse.name }}</span>
           </div>
           <div class="text-xs text-gray-400 font-mono bg-gray-100 px-2 py-1 rounded">C:{{ horse.condition }}</div>

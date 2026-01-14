@@ -11,7 +11,7 @@ describe('TheHeader.vue', () => {
 
   it('renders header with title and buttons', () => {
     const wrapper = mount(TheHeader)
-    
+
     expect(wrapper.find('h1').text()).toContain('Horse Racing')
     expect(wrapper.find('[data-test="generate-btn"]').exists()).toBe(true)
     expect(wrapper.find('[data-test="start-btn"]').exists()).toBe(true)
@@ -23,7 +23,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const generateBtn = wrapper.find('[data-test="generate-btn"]')
-    
+
     expect(generateBtn.attributes('disabled')).toBeDefined()
   })
 
@@ -33,7 +33,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const generateBtn = wrapper.find('[data-test="generate-btn"]')
-    
+
     expect(generateBtn.attributes('disabled')).toBeUndefined()
   })
 
@@ -44,7 +44,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     expect(startBtn.attributes('disabled')).toBeDefined()
   })
 
@@ -55,7 +55,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     expect(startBtn.attributes('disabled')).toBeDefined()
   })
 
@@ -70,7 +70,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     expect(startBtn.attributes('disabled')).toBeDefined()
   })
 
@@ -82,7 +82,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     expect(startBtn.attributes('disabled')).toBeUndefined()
   })
 
@@ -92,7 +92,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     expect(startBtn.text()).toContain('Racing...')
   })
 
@@ -102,7 +102,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     expect(startBtn.text()).toContain('Start Race')
   })
 
@@ -113,7 +113,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const generateBtn = wrapper.find('[data-test="generate-btn"]')
-    
+
     await generateBtn.trigger('click')
 
     expect(generateHorsesSpy).toHaveBeenCalledOnce()
@@ -128,7 +128,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     await startBtn.trigger('click')
 
     expect(startRaceSpy).toHaveBeenCalledOnce()
@@ -141,7 +141,7 @@ describe('TheHeader.vue', () => {
 
     const wrapper = mount(TheHeader)
     const startBtn = wrapper.find('[data-test="start-btn"]')
-    
+
     await startBtn.trigger('click')
 
     expect(startRaceSpy).not.toHaveBeenCalled()

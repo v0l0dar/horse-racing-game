@@ -37,7 +37,8 @@ const results = computed(() => store.results)
           <div class="px-3 py-2">
             <ol class="list-decimal list-inside text-xs text-gray-600 space-y-1">
               <li v-for="horse in res.allResults" :key="horse.id" class="pl-1">
-                {{ horse.name }} <template v-if="horse.id === res.winner.id">🏆</template>
+                {{ horse.name }}
+                <template v-if="horse.id === res.winner.id">🏆</template>
               </li>
             </ol>
           </div>

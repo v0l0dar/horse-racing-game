@@ -60,29 +60,29 @@ export const useGameStore = defineStore('game', {
   actions: {
     generateHorses() {
       const horseNames = [
-        "Thunder",
-        "Blaze",
-        "Shadow",
-        "Storm",
-        "Rocket",
-        "Phantom",
-        "Comet",
-        "Viper",
-        "Falcon",
-        "Inferno",
-        "Lightning",
-        "Tornado",
-        "Ranger",
-        "Eclipse",
-        "Maverick",
-        "Nitro",
-        "Spartan",
-        "Ghost",
-        "Hurricane",
-        "Titan"
-      ];
+        'Thunder',
+        'Blaze',
+        'Shadow',
+        'Storm',
+        'Rocket',
+        'Phantom',
+        'Comet',
+        'Viper',
+        'Falcon',
+        'Inferno',
+        'Lightning',
+        'Tornado',
+        'Ranger',
+        'Eclipse',
+        'Maverick',
+        'Nitro',
+        'Spartan',
+        'Ghost',
+        'Hurricane',
+        'Titan',
+      ]
 
-      const shuffledNames = [...horseNames].sort(() => Math.random() - 0.5);
+      const shuffledNames = [...horseNames].sort(() => Math.random() - 0.5)
 
       const rawHorses = Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,

@@ -1,21 +1,21 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
-  import { useGameStore } from '@/stores/game'
+import { computed } from 'vue'
+import { useGameStore } from '@/stores/game'
 
-  const store = useGameStore()
+const store = useGameStore()
 
-  const isRunning = computed(() => store.isRaceRunning)
-  const hasSchedule = computed(() => store.schedule.length > 0)
-  const isFinished = computed(() => store.isFinished)
+const isRunning = computed(() => store.isRaceRunning)
+const hasSchedule = computed(() => store.schedule.length > 0)
+const isFinished = computed(() => store.isFinished)
 
-  const handleGenerate = () => {
-    store.generateHorses()
-    store.generateSchedule()
-  }
+const handleGenerate = () => {
+  store.generateHorses()
+  store.generateSchedule()
+}
 
-  const handleStart = () => {
-    store.startRace()
-  }
+const handleStart = () => {
+  store.startRace()
+}
 </script>
 
 <template>
