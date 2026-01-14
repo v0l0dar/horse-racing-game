@@ -138,7 +138,7 @@ export const useGameStore = defineStore('game', {
             if (pos.finished) return pos
 
             const horse = round.horses.find(h => h.id === pos.id)!
-            const speed = 1 + horse.condition * 0.05 + Math.random() * 2
+            const speed = 2 + horse.condition * 0.03 + Math.random() * 2
             const distanceFactor = 1200 / round.distance
 
             let newProgress = pos.progress + speed * distanceFactor
