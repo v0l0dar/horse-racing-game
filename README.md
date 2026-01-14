@@ -34,6 +34,10 @@ cd horse-racing-game
 npm install
 
 ```
+```bash
+npx playwright install   
+
+```
 
 
 3. **Start the development server:**

@@ -43,4 +43,103 @@ describe('RaceTrack.vue', () => {
     expect(runner2.text()).toContain('Dash')
     expect(runner2.attributes('style')).toContain('left: calc(20% - 2rem)')
   })
+
+  it('renders correct number of lanes for 10 horses', () => {
+    const store = useGameStore()
+    const horses = Array.from({ length: 10 }, (_, i) => ({
+      id: i + 1,
+      name: `Horse ${i + 1}`,
+      color: '#fff',
+      condition: 50,
+    }))
+
+    store.schedule = [{ roundId: 1, distance: 1200, horses }]
+    store.currentRoundIndex = 0
+    store.currentRacePositions = horses.map(h => ({
+      id: h.id,
+      progress: 0,
+      finished: false,
+      time: 0,
+    }))
+
+    const wrapper = mount(RaceTrack)
+
+    expect(wrapper.findAll('[data-test="horse-lane"]')).toHaveLength(10)
+  })
+
+  it('displays correct round information', () => {
+    const store = useGameStore()
+    store.schedule = [
+      { roundId: 1, distance: 1200, horses: [mockHorse1] },
+      { roundId: 2, distance: 2000, horses: [mockHorse1] },
+    ]
+    store.currentRoundIndex = 1
+    store.currentRacePositions = [{ id: 1, progress: 0, finished: false, time: 0 }]
+
+    const wrapper = mount(RaceTrack)
+
+    expect(wrapper.find('[data-test="round-info"]').text()).toBe('Round 2 — 2000m')
+  })
+
+  it('calculates progress position correctly for 0%', () => {
+    const store = useGameStore()
+    store.schedule = [{ roundId: 1, distance: 1200, horses: [mockHorse1] }]
+    store.currentRoundIndex = 0
+    store.currentRacePositions = [{ id: 1, progress: 0, finished: false, time: 0 }]
+
+    const wrapper = mount(RaceTrack)
+
+    const runner = wrapper.find('[data-test="horse-runner-1"]')
+    expect(runner.attributes('style')).toContain('left: calc(0% - 2rem)')
+  })
+
+  it('calculates progress position correctly for 100%', () => {
+    const store = useGameStore()
+    store.schedule = [{ roundId: 1, distance: 1200, horses: [mockHorse1] }]
+    store.currentRoundIndex = 0
+    store.currentRacePositions = [{ id: 1, progress: 100, finished: true, time: 1000 }]
+
+    const wrapper = mount(RaceTrack)
+
+    const runner = wrapper.find('[data-test="horse-runner-1"]')
+    expect(runner.attributes('style')).toContain('left: calc(100% - 2rem)')
+  })
+
+  it('handles missing position data gracefully', () => {
+    const store = useGameStore()
+    store.schedule = [{ roundId: 1, distance: 1200, horses: [mockHorse1] }]
+    store.currentRoundIndex = 0
+    store.currentRacePositions = []
+
+    const wrapper = mount(RaceTrack)
+
+    const runner = wrapper.find('[data-test="horse-runner-1"]')
+    expect(runner.attributes('style')).toContain('left: calc(0% - 2rem)')
+  })
+
+  it('displays lane numbers correctly', () => {
+    const store = useGameStore()
+    const horses = Array.from({ length: 3 }, (_, i) => ({
+      id: i + 1,
+      name: `Horse ${i + 1}`,
+      color: '#fff',
+      condition: 50,
+    }))
+
+    store.schedule = [{ roundId: 1, distance: 1200, horses }]
+    store.currentRoundIndex = 0
+    store.currentRacePositions = horses.map(h => ({
+      id: h.id,
+      progress: 0,
+      finished: false,
+      time: 0,
+    }))
+
+    const wrapper = mount(RaceTrack)
+
+    const lanes = wrapper.findAll('[data-test="horse-lane"]')
+    lanes.forEach((lane, index) => {
+      expect(lane.text()).toContain(`${index + 1}`)
+    })
+  })
 })
