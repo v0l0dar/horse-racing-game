@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
-import { useGameStore, type Horse, type Round } from '../game'
+import { useGameStore, type Round } from '../game'
 
 describe('Game Store', () => {
   beforeEach(() => {

@@ -23,7 +23,7 @@ Please ensure you have **Node.js** installed with one of the following versions 
 
 1. **Clone the repository:**
 ```bash
-git clone <repository-url>
+git clone https://github.com/v0l0dar/horse-racing-game ./
 cd horse-racing-game
 
 ```
