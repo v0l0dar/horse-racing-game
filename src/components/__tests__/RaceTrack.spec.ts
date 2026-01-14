@@ -23,8 +23,8 @@ describe('RaceTrack.vue', () => {
     store.schedule = [{ roundId: 1, distance: 1200, horses: [mockHorse1, mockHorse2] }]
     store.currentRoundIndex = 0
     store.currentRacePositions = [
-      { id: 1, progress: 50, finished: false },
-      { id: 2, progress: 20, finished: false },
+      { id: 1, progress: 50, finished: false, time: 0 },
+      { id: 2, progress: 20, finished: false, time: 0 },
     ]
     store.isRaceRunning = true
 

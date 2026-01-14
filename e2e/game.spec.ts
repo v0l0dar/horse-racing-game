@@ -16,10 +16,10 @@ const test = base.extend<CoverageFixture>({
         ]);
       }
 
-    
+
       await use();
 
- 
+
      if (isChromium) {
         const [jsCoverage, cssCoverage] = await Promise.all([
           page.coverage.stopJSCoverage(),
@@ -68,9 +68,6 @@ test.describe('Horse Racing Game E2E', () => {
 
     const firstResult = page.locator('[data-test="result-card"]').first();
     await expect(firstResult).toBeVisible({ timeout: 15000 });
-
-    const winnerName = page.locator('[data-test="result-winner"]').first();
-    await expect(winnerName).not.toHaveText('');
 
     await expect(startBtn).toBeEnabled();
     await expect(startBtn).toHaveText('Start Race');

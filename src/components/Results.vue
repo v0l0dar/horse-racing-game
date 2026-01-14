@@ -27,18 +27,10 @@ const results = computed(() => store.results)
         <span class="text-xs text-gray-400">{{ res.distance }}m</span>
       </div>
 
-      <div
-        data-test="result-winner"
-        class="px-3 py-2 bg-yellow-50/50 flex items-center gap-2 border-b border-yellow-100"
-      >
-        <span class="text-lg">🏆</span>
-        <span class="text-sm font-bold text-yellow-800">{{ res.winner.name }}</span>
-      </div>
-
       <div class="px-3 py-2">
         <ol class="list-decimal list-inside text-xs text-gray-600 space-y-1">
           <li v-for="horse in res.allResults" :key="horse.id" class="pl-1">
-            {{ horse.name }}
+            {{ horse.name }} <template v-if="horse.id === res.winner.id">🏆</template>
           </li>
         </ol>
       </div>

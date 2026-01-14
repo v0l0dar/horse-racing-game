@@ -19,7 +19,7 @@ const getProgress = (id: number) => {
     <div
       v-if="currentRound"
       data-test="round-info"
-      class="text-sm font-mono bg-red-100 text-red-600 px-3 py-1 rounded-full border border-red-200"
+      class="text-sm font-mono bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200"
     >
       Round {{ currentRound.roundId }} — {{ currentRound.distance }}m
     </div>
@@ -53,7 +53,7 @@ const getProgress = (id: number) => {
         <div
           class="w-8 h-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold shrink-0 z-10"
         >
-          <span class="-rotate-90">
+          <span class="-rotate-90 -ms-2.5">
             {{ Number(index) + 1 }}
           </span>
         </div>

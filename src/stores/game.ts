@@ -28,6 +28,7 @@ export interface RacePosition {
   id: number
   progress: number
   finished: boolean
+  time: number
 }
 
 const randomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min
@@ -58,9 +59,34 @@ export const useGameStore = defineStore('game', {
 
   actions: {
     generateHorses() {
+      const horseNames = [
+        "Thunder",
+        "Blaze",
+        "Shadow",
+        "Storm",
+        "Rocket",
+        "Phantom",
+        "Comet",
+        "Viper",
+        "Falcon",
+        "Inferno",
+        "Lightning",
+        "Tornado",
+        "Ranger",
+        "Eclipse",
+        "Maverick",
+        "Nitro",
+        "Spartan",
+        "Ghost",
+        "Hurricane",
+        "Titan"
+      ];
+
+      const shuffledNames = [...horseNames].sort(() => Math.random() - 0.5);
+
       const rawHorses = Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
-        name: `Horse ${i + 1}`,
+        name: shuffledNames[i],
         color: randomColor(),
         condition: randomInt(1, 100),
       }))
@@ -88,6 +114,8 @@ export const useGameStore = defineStore('game', {
     },
 
     async startRace() {
+      const startTime = Date.now()
+
       if (this.isRaceRunning || this.currentRoundIndex >= this.schedule.length) return
 
       this.isRaceRunning = true
@@ -99,6 +127,7 @@ export const useGameStore = defineStore('game', {
         id: h.id,
         progress: 0,
         finished: false,
+        time: 0,
       }))
 
       return new Promise<void>(resolve => {
@@ -117,6 +146,7 @@ export const useGameStore = defineStore('game', {
             if (newProgress >= 100) {
               newProgress = 100
               pos.finished = true
+              pos.time = Date.now() - startTime
             } else {
               allFinished = false
             }
@@ -135,6 +165,8 @@ export const useGameStore = defineStore('game', {
     },
 
     processRoundResults(finalPositions: RacePosition[]) {
+      finalPositions.sort((a, b) => a.time - b.time)
+
       const currentRound = this.schedule[this.currentRoundIndex]
       const winnerId = finalPositions[0]?.id
       const winner = currentRound?.horses.find(h => h.id === winnerId)

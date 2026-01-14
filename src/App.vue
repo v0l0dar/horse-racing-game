@@ -23,10 +23,10 @@ const handleStart = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100 font-sans text-slate-800 flex flex-col overflow-hidden">
+  <div class="min-h-screen bg-gray-100 font-sans text-slate-800 flex flex-col">
     <header class="bg-amber-500 text-white px-6 py-4 shadow-md flex justify-between items-center z-10">
       <h1 class="text-2xl font-bold tracking-wider flex items-center gap-2">
-        <span>🏇</span>
+        <span class="text-4xl">🏇</span>
         Horse Racing
       </h1>
       <div class="flex gap-4">
@@ -49,8 +49,8 @@ const handleStart = () => {
       </div>
     </header>
 
-    <main class="flex-1 p-4 grid grid-cols-12 gap-4 overflow-hidden h-[calc(100vh-80px)]">
-      <aside class="col-span-2 bg-white rounded-lg shadow-sm overflow-hidden flex flex-col border border-gray-200">
+    <main class="flex-1 p-4 grid grid-cols-12 gap-4 max-h-[calc(100vh-80px)] h-[calc(100vh-80px)]">
+      <aside class="col-span-2 bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 flex-1 h-full min-h-0 overflow-hidden">
         <div
           class="bg-gray-50 p-3 border-b border-gray-200 font-bold text-gray-700 text-center uppercase text-xs tracking-wider"
         >
@@ -61,14 +61,14 @@ const handleStart = () => {
         </div>
       </aside>
 
-      <section class="col-span-6 flex flex-col gap-4">
-        <div class="flex-1 bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 flex flex-col">
+      <section class="col-span-6 flex flex-col gap-4 flex-1 h-full min-h-0">
+        <div class="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col overflow-hidden">
           <RaceTrack />
         </div>
       </section>
 
-      <aside class="col-span-4 flex gap-4 h-full">
-        <div class="flex-1 bg-white rounded-lg shadow-sm overflow-hidden flex flex-col border border-gray-200 h-1/2">
+      <aside class="col-span-4 flex gap-4 flex-1 h-full min-h-0">
+        <div class="flex-1 bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 overflow-hidden">
           <div
             class="bg-blue-50 p-3 border-b border-blue-100 font-bold text-blue-800 text-center uppercase text-xs tracking-wider"
           >
@@ -79,7 +79,7 @@ const handleStart = () => {
           </div>
         </div>
 
-        <div class="flex-1 bg-white rounded-lg shadow-sm overflow-hidden flex flex-col border border-gray-200 h-1/2">
+        <div class="flex-1 bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 overflow-hidden">
           <div
             class="bg-green-50 p-3 border-b border-green-100 font-bold text-green-800 text-center uppercase text-xs tracking-wider"
           >
