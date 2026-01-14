@@ -18,4 +18,17 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  test: {
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.ts', 'src/**/*.vue'],
+      exclude: [
+        'src/main.ts', 
+        'src/types/**', 
+        'src/**/*.d.ts', 
+        'src/**/__tests__/**' 
+      ], 
+    },
+  }
 })
