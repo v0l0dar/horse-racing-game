@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from '@/store'
+import { useGameStore } from '@/stores/game'
 
-const store = useStore()
-const horses = computed(() => store.state.horses)
+const store = useGameStore()
+const horses = computed(() => store.horses)
 </script>
 
 <template>

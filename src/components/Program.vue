@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from '@/store'
+import { useGameStore } from '@/stores/game'
 
 defineOptions({
   name: 'ProgramSection',
 })
 
-const store = useStore()
-const schedule = computed(() => store.state.schedule)
-const currentRoundIndex = computed(() => store.state.currentRoundIndex)
+const store = useGameStore()
+const schedule = computed(() => store.schedule)
+const currentRoundIndex = computed(() => store.currentRoundIndex)
 </script>
 
 <template>

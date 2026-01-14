@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from './store'
+import { useGameStore } from './stores/game'
 import HorseList from './components/HorseList.vue'
 import RaceTrack from './components/RaceTrack.vue'
 import Program from './components/Program.vue'
 import Results from './components/Results.vue'
 
-const store = useStore()
+const store = useGameStore()
 
-const isRunning = computed(() => store.state.isRaceRunning)
-
-const hasSchedule = computed(() => store.state.schedule.length > 0)
-const isFinished = computed(() => store.getters.isFinished)
+const isRunning = computed(() => store.isRaceRunning)
+const hasSchedule = computed(() => store.schedule.length > 0)
+const isFinished = computed(() => store.isFinished)
 
 const handleGenerate = () => {
-  store.dispatch('generateHorses')
-  store.dispatch('generateSchedule')
+  store.generateHorses()
+  store.generateSchedule()
 }
 
 const handleStart = () => {
-  store.dispatch('startRace')
+  store.startRace()
 }
 </script>
 

@@ -1,5 +1,4 @@
-import { createStore, Store, useStore as baseUseStore } from 'vuex'
-import type { InjectionKey } from 'vue'
+import { defineStore } from 'pinia'
 import { z } from 'zod'
 
 export const HorseSchema = z.object({
@@ -31,34 +30,23 @@ export interface RacePosition {
   finished: boolean
 }
 
-export interface State {
-  horses: Horse[]
-  schedule: Round[]
-  results: GameResult[]
-  currentRoundIndex: number
-  isRaceRunning: boolean
-  currentRacePositions: RacePosition[]
-}
-
 const randomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min
-
 const randomColor = (): string =>
   '#' +
   Math.floor(Math.random() * 16777215)
     .toString(16)
     .padStart(6, '0')
 
-export const key: InjectionKey<Store<State>> = Symbol()
-
-export default createStore<State>({
-  state: {
-    horses: [],
-    schedule: [],
-    results: [],
+export const useGameStore = defineStore('game', {
+  state: () => ({
+    horses: [] as Horse[],
+    schedule: [] as Round[],
+    results: [] as GameResult[],
     currentRoundIndex: 0,
     isRaceRunning: false,
-    currentRacePositions: [],
-  },
+    currentRacePositions: [] as RacePosition[],
+  }),
+
   getters: {
     currentRound(state): Round | null {
       return state.schedule[state.currentRoundIndex] || null
@@ -67,30 +55,9 @@ export default createStore<State>({
       return state.schedule.length > 0 && state.currentRoundIndex >= state.schedule.length
     },
   },
-  mutations: {
-    SET_HORSES(state, horses: Horse[]) {
-      state.horses = horses
-    },
-    SET_SCHEDULE(state, schedule: Round[]) {
-      state.schedule = schedule
-      state.currentRoundIndex = 0
-      state.results = []
-    },
-    SET_RACE_RUNNING(state, isRunning: boolean) {
-      state.isRaceRunning = isRunning
-    },
-    ADD_RESULT(state, roundResult: GameResult) {
-      state.results.push(roundResult)
-    },
-    NEXT_ROUND(state) {
-      state.currentRoundIndex++
-    },
-    UPDATE_POSITIONS(state, positions: RacePosition[]) {
-      state.currentRacePositions = positions
-    },
-  },
+
   actions: {
-    generateHorses({ commit }) {
+    generateHorses() {
       const rawHorses = Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
         name: `Horse ${i + 1}`,
@@ -98,15 +65,14 @@ export default createStore<State>({
         condition: randomInt(1, 100),
       }))
 
-      const horses = z.array(HorseSchema).parse(rawHorses)
-      commit('SET_HORSES', horses)
+      this.horses = z.array(HorseSchema).parse(rawHorses)
     },
 
-    generateSchedule({ state, commit }) {
+    generateSchedule() {
       const distances = [1200, 1400, 1600, 1800, 2000, 2200]
 
       const rawSchedule = distances.map((distance, index) => {
-        const shuffled = [...state.horses].sort(() => 0.5 - Math.random())
+        const shuffled = [...this.horses].sort(() => 0.5 - Math.random())
         const selectedHorses = shuffled.slice(0, 10)
 
         return {
@@ -116,19 +82,20 @@ export default createStore<State>({
         }
       })
 
-      const schedule = z.array(RoundSchema).parse(rawSchedule)
-      commit('SET_SCHEDULE', schedule)
+      this.schedule = z.array(RoundSchema).parse(rawSchedule)
+      this.currentRoundIndex = 0
+      this.results = []
     },
 
-    async startRace({ state, commit, dispatch }) {
-      if (state.isRaceRunning || state.currentRoundIndex >= state.schedule.length) return
+    async startRace() {
+      if (this.isRaceRunning || this.currentRoundIndex >= this.schedule.length) return
 
-      commit('SET_RACE_RUNNING', true)
-      const round = state.schedule[state.currentRoundIndex]
+      this.isRaceRunning = true
+      const round = this.schedule[this.currentRoundIndex]
 
       if (!round) return
 
-      let positions: RacePosition[] = round.horses.map(h => ({
+      this.currentRacePositions = round.horses.map(h => ({
         id: h.id,
         progress: 0,
         finished: false,
@@ -138,11 +105,10 @@ export default createStore<State>({
         const interval = setInterval(() => {
           let allFinished = true
 
-          positions = positions.map(pos => {
+          this.currentRacePositions = this.currentRacePositions.map(pos => {
             if (pos.finished) return pos
 
             const horse = round.horses.find(h => h.id === pos.id)!
-
             const speed = horse.condition * 0.05 + Math.random() * 2
             const distanceFactor = 1200 / round.distance
 
@@ -158,22 +124,18 @@ export default createStore<State>({
             return { ...pos, progress: newProgress }
           })
 
-          commit('UPDATE_POSITIONS', positions)
-
           if (allFinished) {
             clearInterval(interval)
-            commit('SET_RACE_RUNNING', false)
-
-            dispatch('processRoundResults', positions)
+            this.isRaceRunning = false
+            this.processRoundResults(this.currentRacePositions)
             resolve()
           }
         }, 100)
       })
     },
 
-    processRoundResults({ state, commit }, finalPositions: RacePosition[]) {
-      const currentRound = state.schedule[state.currentRoundIndex]
-
+    processRoundResults(finalPositions: RacePosition[]) {
+      const currentRound = this.schedule[this.currentRoundIndex]
       const winnerId = finalPositions[0]?.id
       const winner = currentRound?.horses.find(h => h.id === winnerId)
 
@@ -188,13 +150,9 @@ export default createStore<State>({
           .filter((h): h is Horse => !!h),
       })
 
-      commit('ADD_RESULT', resultEntry)
-      commit('NEXT_ROUND')
-      commit('UPDATE_POSITIONS', [])
+      this.results.push(resultEntry)
+      this.currentRoundIndex++
+      this.currentRacePositions = []
     },
   },
 })
-
-export function useStore() {
-  return baseUseStore(key)
-}

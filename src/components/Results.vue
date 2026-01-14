@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from '@/store'
+import { useGameStore } from '@/stores/game'
 
 defineOptions({
   name: 'ResultsSection',
 })
 
-const store = useStore()
-const results = computed(() => store.state.results)
+const store = useGameStore()
+const results = computed(() => store.results)
 </script>
 
 <template>

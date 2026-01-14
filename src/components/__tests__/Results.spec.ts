@@ -1,30 +1,23 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createStore } from 'vuex'
-import { key } from '@/store'
+import { createPinia, setActivePinia } from 'pinia'
+import { useGameStore } from '@/stores/game'
 import Results from '../Results.vue'
 
-const createVuexStore = (stateOverride: Record<string, unknown> = {}) => {
-  return createStore({
-    state: {
-      results: [],
-      ...stateOverride,
-    },
-  })
-}
-
 describe('Results.vue', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
   it('renders waiting message initially', () => {
-    const store = createVuexStore()
-    const wrapper = mount(Results, {
-      global: { plugins: [[store, key]] },
-    })
+    const wrapper = mount(Results)
     expect(wrapper.text()).toContain('Waiting for results')
   })
 
   it('displays winner information correctly', () => {
+    const store = useGameStore()
     const mockHorse = { id: 1, name: 'Speedy', color: '#ff0000', condition: 90 }
-    const mockResults = [
+
+    store.results = [
       {
         roundId: 1,
         distance: 1200,
@@ -33,14 +26,10 @@ describe('Results.vue', () => {
       },
     ]
 
-    const store = createVuexStore({ results: mockResults })
-    const wrapper = mount(Results, {
-      global: { plugins: [[store, key]] },
-    })
+    const wrapper = mount(Results)
 
     expect(wrapper.text()).toContain('Speedy')
     expect(wrapper.text()).toContain('Round 1')
-
     expect(wrapper.text()).toContain('🏆')
   })
 })

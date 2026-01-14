@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from '@/store'
+import { useGameStore } from '@/stores/game'
 
-const store = useStore()
+const store = useGameStore()
 
-const currentRound = computed(() => store.getters.currentRound)
-const positions = computed(() => store.state.currentRacePositions)
+const currentRound = computed(() => store.currentRound)
+const positions = computed(() => store.currentRacePositions)
 
 const getProgress = (id: number) => {
   const pos = positions.value.find(p => p.id === id)
