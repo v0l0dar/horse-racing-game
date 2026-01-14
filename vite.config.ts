@@ -30,5 +30,7 @@ export default defineConfig({
         'src/**/__tests__/**' 
       ], 
     },
+  },build: {
+    sourcemap: true 
   }
 })

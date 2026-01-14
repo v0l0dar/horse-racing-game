@@ -29,7 +29,17 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+ reporter: [
+    ['list'],
+    ['monocart-reporter', {  
+      name: "My App Coverage",
+      outputFile: './coverage-e2e/index.html',
+      coverage: {
+        entryFilter: () => true,
+        sourceFilter: (sourcePath: string | string[]) => sourcePath.includes('src/'),
+      }
+    }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
       testIdAttribute: 'data-test', 
