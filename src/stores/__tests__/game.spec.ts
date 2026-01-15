@@ -224,26 +224,8 @@ describe('Game Store', () => {
     })
 
     it('creates result entry with correct structure', () => {
-      const round = store.schedule[0]
-      const mockPositions = round.horses.map((horse, index) => ({
-        id: horse.id,
-        progress: 100,
-        finished: true,
-        time: 1000 + index * 100, // Different times
-      }))
+      const round = store.schedule[0]!
 
-      store.processRoundResults(mockPositions)
-
-      expect(store.results).toHaveLength(1)
-      const result = store.results[0]
-      expect(result.roundId).toBe(round.roundId)
-      expect(result.distance).toBe(round.distance)
-      expect(result.winner).toBeDefined()
-      expect(result.allResults).toHaveLength(round.horses.length)
-    })
-
-    it('selects winner as horse with fastest time', () => {
-      const round = store.schedule[0]
       const mockPositions = round.horses.map((horse, index) => ({
         id: horse.id,
         progress: 100,
@@ -253,33 +235,53 @@ describe('Game Store', () => {
 
       store.processRoundResults(mockPositions)
 
-      const result = store.results[0]
-      const fastestPosition = mockPositions.sort((a, b) => a.time - b.time)[0]
-      expect(result.winner.id).toBe(fastestPosition.id)
+      expect(store.results).toHaveLength(1)
+      const result = store.results[0]!
+
+      expect(result.roundId).toBe(round.roundId)
+      expect(result.distance).toBe(round.distance)
+      expect(result.winner).toBeDefined()
+      expect(result.allResults).toHaveLength(round.horses.length)
     })
 
-    it('sorts allResults by finish time', () => {
-      const round = store.schedule[0]
+    it('selects winner as horse with fastest time', () => {
+      const round = store.schedule[0]!
       const mockPositions = round.horses.map((horse, index) => ({
         id: horse.id,
         progress: 100,
         finished: true,
-        time: 2000 - index * 100, // Decreasing times
+        time: 1000 + index * 100,
       }))
 
       store.processRoundResults(mockPositions)
 
-      const result = store.results[0]
+      const result = store.results[0]!
+      const fastestPosition = mockPositions.sort((a, b) => a.time - b.time)[0]!
+      expect(result.winner.id).toBe(fastestPosition.id)
+    })
+
+    it('sorts allResults by finish time', () => {
+      const round = store.schedule[0]!
+      const mockPositions = round.horses.map((horse, index) => ({
+        id: horse.id,
+        progress: 100,
+        finished: true,
+        time: 2000 - index * 100,
+      }))
+
+      store.processRoundResults(mockPositions)
+
+      const result = store.results[0]!
       const sortedPositions = [...mockPositions].sort((a, b) => a.time - b.time)
 
       result.allResults.forEach((horse, index) => {
-        expect(horse.id).toBe(sortedPositions[index].id)
+        expect(horse.id).toBe(sortedPositions[index]!.id)
       })
     })
 
     it('increments currentRoundIndex', () => {
       const initialIndex = store.currentRoundIndex
-      const round = store.schedule[0]
+      const round = store.schedule[0]!
       const mockPositions = round.horses.map(horse => ({
         id: horse.id,
         progress: 100,
@@ -294,7 +296,7 @@ describe('Game Store', () => {
 
     it('clears currentRacePositions', () => {
       store.currentRacePositions = [{ id: 1, progress: 50, finished: false, time: 0 }]
-      const round = store.schedule[0]
+      const round = store.schedule[0]!
       const mockPositions = round.horses.map(horse => ({
         id: horse.id,
         progress: 100,

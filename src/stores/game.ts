@@ -168,17 +168,20 @@ export const useGameStore = defineStore('game', {
       finalPositions.sort((a, b) => a.time - b.time)
 
       const currentRound = this.schedule[this.currentRoundIndex]
+
+      if (!currentRound) throw new Error('Current round not found')
+
       const winnerId = finalPositions[0]?.id
-      const winner = currentRound?.horses.find(h => h.id === winnerId)
+      const winner = currentRound.horses.find(h => h.id === winnerId)
 
       if (!winner) throw new Error('Winner not found')
 
       const resultEntry = ResultSchema.parse({
-        roundId: currentRound?.roundId,
-        distance: currentRound?.distance,
+        roundId: currentRound.roundId,
+        distance: currentRound.distance,
         winner: winner,
         allResults: finalPositions
-          .map(p => currentRound?.horses.find(h => h.id === p.id))
+          .map(p => currentRound.horses.find(h => h.id === p.id))
           .filter((h): h is Horse => !!h),
       })
 

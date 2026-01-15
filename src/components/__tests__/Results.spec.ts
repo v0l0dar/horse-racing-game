@@ -80,7 +80,7 @@ describe('Results.vue', () => {
       {
         roundId: 1,
         distance: 1200,
-        winner: horses[0],
+        winner: horses[0]!,
         allResults: horses,
       },
     ]
