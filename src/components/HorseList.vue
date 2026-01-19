@@ -8,7 +8,8 @@ const horses = computed(() => store.horses)
 
 <template>
   <aside
-    class="col-span-2 bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 flex-1 h-full min-h-0 overflow-hidden"
+    class="bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 overflow-hidden
+           w-full h-64 lg:h-full lg:col-span-2"
   >
     <div
       class="bg-gray-50 p-3 border-b border-gray-200 font-bold text-gray-700 text-center uppercase text-xs tracking-wider"

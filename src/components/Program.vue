@@ -12,13 +12,13 @@ const currentRoundIndex = computed(() => store.currentRoundIndex)
 </script>
 
 <template>
-  <div class="flex-1 bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 overflow-hidden">
+  <div class="bg-white rounded-lg shadow-sm flex flex-col border border-gray-200 overflow-hidden w-full">
     <div
       class="bg-blue-50 p-3 border-b border-blue-100 font-bold text-blue-800 text-center uppercase text-xs tracking-wider"
     >
       Program
     </div>
-    <div class="flex-1 overflow-y-auto">
+    <div class="flex-1 overflow-y-auto custom-scrollbar">
       <div v-if="schedule.length === 0" data-test="empty-message" class="p-8 text-center text-gray-400 text-sm">
         No schedule generated.
       </div>
